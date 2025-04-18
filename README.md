@@ -3,7 +3,7 @@
 A responsive personal portfolio website showcasing my skills, experience, projects, and contact information.
 
 ## 🚀 Live Demo
-[Visit the live site](https://tanishqchavan.github.io/portfolio-website/)
+[Visit the live site](https://web-portfolio-4ohu.onrender.com)
 
 ## ✨ Features
 
