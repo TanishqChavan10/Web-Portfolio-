@@ -2,8 +2,6 @@
 
 A responsive personal portfolio website showcasing my skills, experience, projects, and contact information.
 
-![Portfolio Preview](images/photo1.jpg)
-
 ## 🚀 Live Demo
 [Visit the live site](https://tanishqchavan.github.io/portfolio-website/)
 
