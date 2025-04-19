@@ -1,4 +1,4 @@
-# Tanishq Chavan | Full-Stack MERN Developer Portfolio
+# Tanishq Chavan | Portfolio
 
 A responsive personal portfolio website showcasing my skills, experience, projects, and contact information.
 
