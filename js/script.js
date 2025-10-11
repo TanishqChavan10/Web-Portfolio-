@@ -61,6 +61,14 @@ navLinks.forEach((link,idx)=>{
             link.classList.add('active');
             setTimeout(()=>{
                 sections[idx].classList.add('active');
+                
+                // Reset portfolio to first item when entering portfolio section
+                if(idx === 3) { // Portfolio is the 4th section (index 3)
+                    index = 0;
+                    activePortfolio();
+                    arrowLeft.classList.add('disabled');
+                    arrowRight.classList.remove('disabled');
+                }
             },1100);
         }
     });

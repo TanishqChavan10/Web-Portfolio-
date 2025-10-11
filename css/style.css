@@ -15,14 +15,62 @@
     --main-color: #7cf03d;
     --white-color: #fff;
     --disable-color: #fff3;
+}
 
+/* Global scrollbar styling */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--main-color) transparent;
+}
+
+/* Hide scrollbars for specific containers */
+.resume-list, .portfolio-carousel, .services-container {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.resume-list::-webkit-scrollbar, 
+.portfolio-carousel::-webkit-scrollbar, 
+.services-container::-webkit-scrollbar {
+    display: none;
 }
 
 html{
     font-size: 62.5%;
+    /* Custom scrollbar for webkit browsers */
+    scrollbar-width: thin;
+    scrollbar-color: var(--main-color) var(--bg-color);
 }
+
+/* Custom scrollbar for webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--main-color), #5fa32b);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #8ff04a, var(--main-color));
+    box-shadow: 0 0 10px rgba(124, 240, 61, 0.5);
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--bg-color);
+}
+
 body{
     color: var(--white-color);
+    /* Hide scrollbar for better aesthetics while keeping functionality */
+    overflow-x: hidden;
 }
 header{
     position: fixed;
@@ -138,13 +186,54 @@ section{
     padding: 10rem 9% 2rem;
     visibility: hidden;
     opacity: 0;
-    overflow:hidden;
+    overflow: hidden;
+}
+
+/* Custom scrollbar for section content when active */
+section.active{
+    animation: show-content 1.5s linear forwards;
+    animation-delay: 1.6s;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+section.active::-webkit-scrollbar {
+    width: 6px;
+}
+
+section.active::-webkit-scrollbar-track {
+    background: rgba(50, 57, 70, 0.3);
+    border-radius: 10px;
+}
+
+section.active::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--main-color), #5fa32b);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+section.active::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #8ff04a, var(--main-color));
 }
 
 .home{
     display: flex;
     align-items: center;
     gap: 5rem;
+}
+
+/* Hide scrollbar for home section */
+.home.active {
+    overflow: hidden !important;
+}
+
+.home.active::-webkit-scrollbar {
+    display: none !important;
+}
+
+.home.active {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
 .home-detail h1{
     font-size:clamp(3.5rem,10vw,5.5rem);
@@ -172,7 +261,7 @@ section{
     color: var(--main-color);
     white-space:nowrap;
     overflow: hidden;
-    animation:fill-text 4s linear infinite;
+    animation:fill-text 3s linear infinite;
 }
 
 @keyframes fill-text{
@@ -245,29 +334,34 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-
+    overflow: visible;
+    filter: drop-shadow(0 0 20px rgba(124, 240, 61, 0.3));
 }
 
-.home-img .img-box::before,
-.home-img .img-box:after 
-{
+/* Spinner border */
+.home-img .img-box::before {
     content: '';
     position: absolute;
-    width: 50rem;
-    height: 50rem;
-    background: conic-gradient(transparent,transparent,transparent,var(--main-color));
-    transform: rotate(0deg);
-    animation: rotate-border 10s linear infinite;
+    top: -8px;
+    left: -8px;
+    width: calc(100% + 16px);
+    height: calc(100% + 16px);
+    border: 3px solid transparent;
+    border-top: 3px solid var(--main-color);
+    border-radius: 50%;
+    animation: rotate-border 4s linear infinite;
+    z-index: 0;
 }
 
-.home-img .img-box::after{
-    animation-delay: -5s;
-
+.home-img .img-box::after {
+    content: none;
 }
 
 @keyframes rotate-border{
-    100%{
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
         transform: rotate(360deg);
     }
 }
@@ -306,11 +400,6 @@ section{
 .home-detail .btn-sci a{
     display: flex;
     align-items: center;    
-}
-
-section.active{
-    animation:show-content 1.5s linear forwards;
-    animation-delay:1.6s;
 }
 
 @keyframes show-content{
@@ -529,69 +618,124 @@ section.active{
     line-height: 1.6;
 }
 
-.resume-details.skills .resume-list{
-    grid-template-columns: repeat(auto-fit,minmax(15rem,1fr));
+.resume-detail.skills .resume-list{
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 3rem;
     height: auto;
-    overflow:visible;
+    overflow: visible;
+    padding: 2rem 0;
 }
 
 .resume-detail.skills .resume-item{
     position: relative;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    height: auto;
+    justify-content: center;
+    height: 15rem;
+    background: var(--second-bg-color);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.resume-detail.skills .resume-item:hover{
+    transform: translateY(-1rem);
+    background: linear-gradient(135deg, var(--second-bg-color), var(--bg-color));
+    border-color: var(--main-color);
+    box-shadow: 0 1rem 2rem rgba(124, 240, 61, 0.2);
 }
 
 .resume-detail.skills .resume-item i{
-    font-size: 8.5rem;
-    transition: 0.5s;
+    font-size: 6rem;
+    color: var(--white-color);
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
 }
 
 .resume-detail.skills .resume-item:hover i{
-
-    color:var(--main-color);
+    color: var(--main-color);
+    transform: scale(1.1);
 }
+
 .resume-detail.skills .resume-item span{
-    position:absolute;
-    top:-20%;
-    background:var(--white-color);
-    color:var(--bg-color);
-    font-size:1.6rem;
-    padding:0.5rem 1rem;
-    border-radius: 0.6rem;
-    pointer-events: none;
-    opacity: 0;
-    transform: scale(0.9);
-    transition: 0.2s;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--white-color);
+    text-align: center;
+    opacity: 0.8;
+    transition: all 0.3s ease;
 }
 
 .resume-detail.skills .resume-item:hover span{
-    top:-25%;
-    opacity:1;
-    transform:scale(1);
-
+    opacity: 1;
+    color: var(--main-color);
+    transform: scale(1.05);
 }
 
 
 .resume-detail.about .resume-list{
     height: auto;
-    grid-template-columns: repeat(auto-fit,minmax(25rem,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
 }
 
 .resume-detail.about .resume-item{
-    height:auto;
-    padding:0 0 .5rem;
-    background:transparent;
+    height: auto;
+    padding: 2rem;
+    background: var(--second-bg-color);
+    border-radius: 1rem;
+    border-left: 4px solid var(--main-color);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.resume-detail.about .resume-item::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--main-color), transparent);
+    transition: width 0.3s ease;
+}
+
+.resume-detail.about .resume-item:hover::before{
+    width: 100%;
+    opacity: 0.1;
+}
+
+.resume-detail.about .resume-item:hover{
+    transform: translateX(1rem);
+    box-shadow: 0 0.5rem 1.5rem rgba(124, 240, 61, 0.15);
 }
 
 .resume-detail.about .resume-item p{
-    color:var(--main-color);
+    color: var(--main-color);
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .resume-detail.about .resume-item p span{
     color: var(--white-color);
-    margin-left:1rem;
-    font-size:1.8rem;
+    font-size: 1.6rem;
+    font-weight: 400;
     word-break: break-word;
+    flex: 1;
+    min-width: 15rem;
+    text-align: right;
+    line-height: 1.4;
 }
 
 .resume-detail.about .resume-item p span a {
@@ -637,7 +781,7 @@ section.active{
 
 }
 .portfolio-box p{
-    font: size 1.6rem;
+    font-size: 2rem;
 }
 
 .portfolio-box .tech{
@@ -645,6 +789,7 @@ section.active{
     color:var(--main-color);
     border-bottom:.1rem solid var(--white-color);
     padding-bottom:2rem;
+    font-size: 1.8rem;
 }
 
 
@@ -901,6 +1046,48 @@ section.active{
     }
     .resume-container{
         gap:3rem;
+    }
+    
+    /* Skills section responsive */
+    .resume-detail.skills .resume-list{
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        gap: 2rem;
+    }
+    
+    .resume-detail.skills .resume-item{
+        height: 12rem;
+        padding: 1.5rem;
+    }
+    
+    .resume-detail.skills .resume-item i{
+        font-size: 4.5rem;
+    }
+    
+    .resume-detail.skills .resume-item span{
+        font-size: 1.6rem;
+    }
+    
+    /* About section responsive */
+    .resume-detail.about .resume-list{
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .resume-detail.about .resume-item{
+        padding: 1.5rem;
+    }
+    
+    .resume-detail.about .resume-item p{
+        font-size: 1.4rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .resume-detail.about .resume-item p span{
+        font-size: 1.4rem;
+        text-align: left;
+        min-width: auto;
     }
 
     .portfolio-container, 
