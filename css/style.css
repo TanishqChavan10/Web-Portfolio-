@@ -812,6 +812,17 @@ section.active::-webkit-scrollbar-thumb:hover {
     margin-right:1.5rem;
 }
 
+.portfolio-box .live-github a.live{
+    background: var(--main-color);
+    color: var(--bg-color);
+}
+
+.portfolio-box .live-github a.live:hover{
+    background: var(--bg-color);
+    color: var(--main-color);
+    box-shadow: 0 0 1rem var(--main-color);
+}
+
 .portfolio-box .live-github a:first-child i{
     transform:rotate(0deg);
 }
